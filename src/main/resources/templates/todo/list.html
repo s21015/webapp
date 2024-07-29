@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>ToDo一覧</title>
+
+	<!-- Flashメッセージの表示 -->
+	<p th:if="${message}" th:text="${message}" style="color: blue;">完了メッセージ
+	</p>
+</head>
+
+<body>
+
+	<span th:text="${#authentication.name}">ユーザー名</span>でログイン中
+	<h2>ToDo一覧</h2>
+	<hr>
+
+	<!-- Flashメッセージの表示 -->
+	<p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;">
+		エラーメッセージ
+	</p>
+	<table border="1" width="350">
+		<tbody>
+			<tr th:each="todo : ${todos}">
+				<td>
+					<a th:href="@{/todos/{id}(id=${todo.id})}">
+						<div th:text="${todo.todo}"></div>
+					</a>
+				</td>
+				<td th:text="${todo.username}"></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<hr>
+	<a th:href="@{/todos/form}">ToDo登録</a>
+	<a th:href="@{/}">メニューへ</a>
+
+	</form>
+</body>
+
+</html>

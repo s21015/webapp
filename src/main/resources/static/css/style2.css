@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+body {
+	background-color: #e0ffff;
+	/* background-image: url(../img/yoshida.jpg);   */
+}
+
+body::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-image: url(../img/2.png);
+	background-size: cover;
+	background-position: center;
+	opacity: 0.1;
+	/* ここで背景画像の不透明度を調整します */
+	z-index: -1;
+	/* 背景画像が他のコンテンツの後ろに来るようにします */
+}
+
+.custom-div {
+	position: relative;
+	border: none;
+	border-radius: 10px;
+	padding: 10px;
+}
+
+.custom-div::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #7fffd4;
+	border-radius: 10px;
+	opacity: 0.5;
+	z-index: -1;
+	/* 背景をテキストの後ろに配置 */
+}
+
+.thread {
+	display: flex;
+}
+
+.text {
+	font-weight: bold;
+}
+
+.page_top_btn {
+	position: fixed;
+	bottom: 50px;
+	right: 50px;
+	width: 60px;
+	/* 画像の幅に合わせて調整 */
+	height: 150px;
+	/* 画像の高さに合わせて調整 */
+	background-image: url('../img/cute\(\).png');
+	/* 使用する画像を指定 */
+	background-size: cover;
+	background-position: center;
+	border: none;
+	cursor: pointer;
+	text-indent: -9999px;
+	/* テキストを視覚的に隠す */
+	transition: 0.3s;
+	z-index: 2;
+}
+
+.page_top_btn:hover {
+	opacity: 0.8;
+	/* ホバー時のエフェクト */
+}

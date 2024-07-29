@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.webapp.repository.AccountMapper">
+	<!-- 全件検索 -->
+	<select id="selectAll" resultType="com.example.webapp.entity.Account">
+		SELECT username, password, role
+		FROM accounts
+	</select>
+	<!-- 1件検索 -->
+	<select id="selectByName" resultType="com.example.webapp.entity.Account">
+		SELECT username, password, role
+		FROM accounts WHERE username = #{username}
+	</select>
+	<!-- roleがuserの人を検索 -->
+	<select id="selectByRoleUser" resultType="com.example.webapp.entity.Account">
+		SELECT username, password, role
+		FROM accounts WHERE role = user
+	</select>
+	<!-- 登録 -->
+	<insert id="regist">
+		INSERT INTO accounts(username, password, role)
+		VALUES
+		(#{username}, #{password}, user)
+	</insert>
+	<!-- 削除 -->
+	<delete id="delete">
+		DELETE FROM accounts WHERE username = #{username}
+	</delete>
+</mapper>

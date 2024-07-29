@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>ToDo詳細</title>
+</head>
+
+<body>
+	<span th:text="${#authentication.name}">ユーザー名</span>でログイン中
+	<h2>ToDo詳細</h2>
+	<hr>
+	<table border="1">
+
+		<tr>
+			<th>ID</th>
+			<td th:text="${todo.id}"></td>
+		</tr>
+		<tr>
+			<th>詳細</th>
+			<td th:text="${todo.detail}"></td>
+		</tr>
+		<tr>
+			<th>登録日時</th>
+			<td th:text="${todo.createdAt.format(
+				T(java.time.format.DateTimeFormatter).
+				ofPattern('yyyy/MM/dd HH:mm:ss'))}">
+			</td>
+		</tr>
+		<tr>
+			<th>更新日時</th>
+			<td th:text="${todo.updatedAt.format(
+				T(java.time.format.DateTimeFormatter).
+				ofPattern('yyyy/MM/dd HH:mm:ss'))}">
+			</td>
+		</tr>
+		<tr>
+			<th>作成者</th>
+			<td th:text="${todo.username}"></td>
+		</tr>
+	</table>
+
+	<hr>
+	<div th:if="${todo.username == #authentication.name}">
+		<a th:href="@{/todos/edit/{id}(id=${todo.id})}">編集</a>
+
+		<a th:href="@{/todos/delete/{id}(id=${todo.id})}">削除</a>
+	</div>
+
+	<div sec:authorize="hasAnyRole('king')">
+		<div th:if="${todo.username != #authentication.name}">
+			<a th:href="@{/todos/edit/{id}(id=${todo.id})}">編集</a>
+
+			<a th:href="@{/todos/delete/{id}(id=${todo.id})}">削除</a>
+		</div>
+	</div>
+
+	<a th:href="@{/todos}">戻る</a>
+</body>
+
+</html>

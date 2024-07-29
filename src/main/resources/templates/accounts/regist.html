@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>新規登録</title>
+</head>
+
+<body>
+	<h2>新規ユーザー登録</h2>
+	<hr>
+
+	<form th:action="@{/regist}" th:object="${accountForm}" method="post">
+
+		<p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;">
+			エラーメッセージ
+		</p>
+		<table>
+			<tr>
+				<th>ユーザー名</th>
+				<td>
+					<input type="text" th:field="*{username}">
+					<span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red;">
+						エラーがあれば表示
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<th>パスワード</th>
+				<td>
+					<input type="password" th:field="*{password}">
+					<span ht:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red;">
+						エラーがあれば表示
+					</span>
+				</td>
+			</tr>
+		</table>
+
+		<input type="submit" value="登録">
+	</form>
+
+	<a th:href="@{/}">メニューに戻る</a>
+</body>
+
+</html>

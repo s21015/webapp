@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>100ちゃん</title>
+
+	<link th:href="@{/css/style.css}" rel="stylesheet">
+
+	<div sec:authorize="hasAnyRole('kadena')">
+		<link th:href="@{/css/style2.css}" rel="stylesheet">
+	</div>
+	<script>
+		var socket = new WebSocket("ws://192.168.140.114:8080/websocket");
+		socket.onmessage = function (event) {
+			location.reload();
+		};
+	</script>
+</head>
+
+<body>
+
+	<div sec:authorize="isAuthenticated()">
+		<span th:text="${#authentication.name}">ユーザー名</span>でログイン中
+	</div>
+	<h2>100ちゃん</h2>
+	<hr>
+
+	<!-- Flashメッセージの表示 -->
+	<p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;">
+		エラーメッセージ
+	</p>
+	<table border="1" width="620">
+		<tbody>
+			<tr th:each="title : ${titles}">
+				<td>
+					<a th:href="@{/100-chan/{titleId}(titleId=${title.id})}">
+						<div th:text="${title.title}"></div>
+					</a>
+				</td>
+				<td>
+					最終更新：<div
+						th:text="${title.updatedAt.format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy/MM/dd HH:mm:ss'))}">
+					</div>
+				</td>
+				<div sec:authorize="hasAnyRole('king')">
+					<td>
+						<form th:action="@{/100-chan/deleteTitle{id}(id=${title.id})}" method="post">
+							<input type="submit" value="削除">
+						</form>
+					</td>
+				</div>
+			</tr>
+		</tbody>
+	</table>
+
+	<hr>
+	<a th:href="@{/100-chan/title-edit}">スレッド作成</a>
+	<a th:href="@{/}">メニュー</a>
+
+	</form>
+</body>
+
+</html>

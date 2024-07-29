@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>100ちゃん</title>
+
+	<link th:href="@{/css/style.css}" rel="stylesheet">
+
+	<div sec:authorize="hasAnyRole('kadena')">
+		<link th:href="@{/css/style2.css}" rel="stylesheet">
+	</div>
+</head>
+
+<body>
+	<div sec:authorize="isAuthenticated()">
+		<span th:text="${#authentication.name}">ユーザー名</span>でログイン中
+	</div>
+
+	<h2>新規登録</h2>
+	<hr>
+
+	<form th:action="@{/100-chan/regist}" th:object="${titlesForm}" method="post">
+
+		<p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;">
+			エラーメッセージ
+		</p>
+		<table>
+			<tr>
+				<th>タイトル</th>
+				<td>
+					<input type="text" th:field="*{title}">
+					<!-- todo用：バリデーションエラー表示 -->
+					<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red;">
+						エラーがあれば表示
+					</span>
+				</td>
+			</tr>
+		</table>
+
+		<input type="submit" value="追加">
+	</form>
+	<hr>
+	<a th:href="@{/100-chan}">戻る</a>
+</body>
+
+</html>

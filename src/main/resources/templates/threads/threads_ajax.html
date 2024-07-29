@@ -1,0 +1,38 @@
+<tbody id="threads-container">
+	<tr th:each="thread, iterStat : ${threads}">
+		<div th:id="${iterStat.index + 1}" class="thread">
+			<div th:text="${iterStat.index + 1}"></div>
+			<span>:</span>
+			<div th:text="${thread.username}"></div>
+			<span>:</span>
+			<div th:text="${thread.createdAt.format(T(java.time.format.DateTimeFormatter).
+							ofPattern('yyyy/MM/dd HH:mm:ss'))}">
+			</div>
+		</div>
+
+		<div class="custom-div">
+
+			<div th:if="${thread.thread.startsWith('http')}">
+				<a th:href="${thread.thread}" target="_blank">
+					<div th:text="${thread.thread}"></div>
+				</a>
+			</div>
+
+			<div th:if="${#strings.contains(thread.thread, '<br>')}" th:utext="${thread.thread}"></div>
+			<div th:if="${#strings.contains(thread.thread, '<script>')}" th:text="${thread.thread}"></div>
+
+			<div th:unless="${thread.thread.startsWith('http') or #strings.contains(thread.thread, '<br>')}"
+				th:text="${thread.thread}"></div>
+		</div>
+
+		<div sec:authorize="hasAnyRole('king')">
+			<form th:action="@{/100-chan/delete{id}/{titleId}(id=${thread.id}, titleId=${thread.titleId})}"
+				th:object="${threadsForm}" method="post">
+				<input id="hidden-titleId" type="hidden" th:field="*{titleId}" value="${thread.titleId}">
+				<input type="submit" value="削除">
+			</form>
+		</div>
+		<hr>
+	</tr>
+</tbody>
+<div id="page_bottom"></div>

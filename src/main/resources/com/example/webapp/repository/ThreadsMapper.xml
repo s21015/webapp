@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.webapp.repository.ThreadsMapper">
+	<!-- 全件検索 -->
+	<select id="selectAll" resultType="com.example.webapp.entity.Threads">
+		SELECT id, title_id as titleId, thread, username, created_at as createdAt FROM threads
+	</select>
+	<select id="selectByTitle" resultType="com.example.webapp.entity.Threads">
+		SELECT id, title_id as titleId, thread, username, created_at as createdAt FROM threads WHERE title_id = #{titleId}
+		ORDER BY createdAt
+	</select>
+	<!-- 登録 -->
+	<insert id="insert">
+		INSERT INTO threads(title_id, thread, username, created_at)
+		VALUES
+		(#{titleId}, #{thread}, #{username}, CURRENT_TIMESTAMP);
+		UPDATE titles
+		SET updated_at = CURRENT_TIMESTAMP
+		WHERE id = #{titleId}
+	</insert>
+	<!-- 削除 -->
+	<delete id="delete">
+		DELETE FROM Threads WHERE id = #{id}
+	</delete>
+</mapper>
